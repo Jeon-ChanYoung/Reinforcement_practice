@@ -1,3 +1,6 @@
 ### MountainCar-v0  
-![Mountain Car](mountaincar.gif)
+ - simulation  
+![Mountain Car](mountaincar.gif)  
+ - statistics  
+![Mountain Car](mountaincar_training_stats.gif)
 
