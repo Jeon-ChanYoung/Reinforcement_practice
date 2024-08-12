@@ -33,7 +33,7 @@ def get_discrete_state(state):
     discrete_state = (state - env.observation_space.low) / discrete_os_win_size
     return tuple(discrete_state.astype(int))
 
-for episode in range(1, EPISODES+1):
+for episode in range(EPISODES+1):
     discrete_state = get_discrete_state(env.reset()[0])
     done = False
 
