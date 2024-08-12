@@ -2,8 +2,8 @@ import gym
 import cv2
 import numpy as np
 import warnings
-from time import sleep
 import matplotlib.pyplot as plt
+# import imageio
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 """
 DeprecationWarning: np.bool8 is a deprecated alias 
@@ -39,6 +39,8 @@ def get_discrete_state(state):
     discrete_state = (state - env.observation_space.low) / discrete_os_win_size
     return tuple(discrete_state.astype(int))
 
+# frames = []
+
 for episode in range(EPISODES):
     episode_reward = 0
     discrete_state = get_discrete_state(env.reset()[0])
@@ -54,6 +56,7 @@ for episode in range(EPISODES):
             img = cv2.cvtColor(env.render(), cv2.COLOR_RGB2BGR)
             cv2.imshow("test", img)
             cv2.waitKey(50)
+            # frames.append(img)
 
         observation, reward, terminated, truncated, info = env.step(action)
         episode_reward += reward
@@ -87,8 +90,10 @@ for episode in range(EPISODES):
         aggr_ep_rewards["max"].append(MAX)
 
 env.close()
+
+# imageio.mimsave('mountaincar.gif', frames, fps=20)
 plt.plot(aggr_ep_rewards["ep"], aggr_ep_rewards["avg"], label="avg_reward")
 plt.plot(aggr_ep_rewards["ep"], aggr_ep_rewards["min"], label="min_reward")
 plt.plot(aggr_ep_rewards["ep"], aggr_ep_rewards["max"], label="max_reward")
-plt.legend(loc=4)
+plt.legend(loc='upper left')
 plt.show()
