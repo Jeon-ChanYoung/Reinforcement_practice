@@ -2,6 +2,8 @@ import gym
 import cv2
 import numpy as np
 import warnings
+from time import sleep
+import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 """
 DeprecationWarning: np.bool8 is a deprecated alias 
@@ -22,6 +24,10 @@ epsilon_decay_value = epsilon / (END_EPSILON_DECAYING - START_EPSILON_DECAYING)
 DISCRETE_OS_SIZE = [20] * len(env.observation_space.high) 
 discrete_os_win_size = (env.observation_space.high - env.observation_space.low) / DISCRETE_OS_SIZE
 q_table = np.random.uniform(low=-2, high=0, size=(DISCRETE_OS_SIZE + [env.action_space.n]))
+
+ep_rewards = []
+aggr_ep_rewards = {"ep":[], "avg":[], "min":[], "max":[]}
+# 현재 에피소드, 평균보상, 최소보상, 최대보상
 '''
 print(env.observation_space) # Box([-1.2  -0.07], [0.6  0.07], (2,), float32)
 print(env.action_space)      #      low             high
@@ -33,7 +39,8 @@ def get_discrete_state(state):
     discrete_state = (state - env.observation_space.low) / discrete_os_win_size
     return tuple(discrete_state.astype(int))
 
-for episode in range(EPISODES+1):
+for episode in range(EPISODES):
+    episode_reward = 0
     discrete_state = get_discrete_state(env.reset()[0])
     done = False
 
@@ -49,6 +56,7 @@ for episode in range(EPISODES+1):
             cv2.waitKey(50)
 
         observation, reward, terminated, truncated, info = env.step(action)
+        episode_reward += reward
         new_discrete_state = get_discrete_state(observation)
         done = terminated or truncated # 정상에 도달 여부 or 제한시간 지나면 False
         
@@ -68,4 +76,19 @@ for episode in range(EPISODES+1):
     if END_EPSILON_DECAYING >= episode >= START_EPSILON_DECAYING:
         epsilon -= epsilon_decay_value
 
+    ep_rewards.append(episode_reward)
+    if episode % GAP == 0:
+        average_reward = sum(ep_rewards[-GAP:]) / len(ep_rewards)
+        MIN = min(ep_rewards[-GAP:])
+        MAX = max(ep_rewards[-GAP:])
+        aggr_ep_rewards["ep"].append(episode)
+        aggr_ep_rewards["avg"].append(average_reward)
+        aggr_ep_rewards["min"].append(MIN)
+        aggr_ep_rewards["max"].append(MAX)
+
 env.close()
+plt.plot(aggr_ep_rewards["ep"], aggr_ep_rewards["avg"], label="avg_reward")
+plt.plot(aggr_ep_rewards["ep"], aggr_ep_rewards["min"], label="min_reward")
+plt.plot(aggr_ep_rewards["ep"], aggr_ep_rewards["max"], label="max_reward")
+plt.legend(loc=4)
+plt.show()
