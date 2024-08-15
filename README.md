@@ -1,5 +1,5 @@
  ## Reinforcement  
- - Repository for implementing and understanding different  reinforcement learning simulations  
+Repository for implementing and understanding different  reinforcement learning simulations<br><br>
 
  - MountainCar-v0 
  - simulation 
