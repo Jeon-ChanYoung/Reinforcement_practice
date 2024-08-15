@@ -3,7 +3,7 @@ Repository for implementing and understanding different  reinforcement learning 
 
  - MountainCar-v0 
  - simulation 
- - CartPole-v1 (using DQN) 
+ - CartPole-v1 (using DQN)<br>    
 ---
 ### MountainCar-v0 (using Q-learning)  
 ![Mountain Car](gif/mountaincar.gif)  
