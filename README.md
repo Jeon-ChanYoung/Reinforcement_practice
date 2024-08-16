@@ -15,5 +15,5 @@ Repository for implementing and understanding different  reinforcement learning 
 ### CartPole-v1 (using DQN)  
 ![CartPole](gif/cartpole-v1.gif)  
 ---  
-### FrozenLake-v1  
+### FrozenLake-v1 (using DQN)
 ![FrozenLake](gif/FrozenLake-v1.gif)
