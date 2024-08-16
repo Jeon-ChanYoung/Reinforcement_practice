@@ -1,5 +1,5 @@
 import gym
-from DQN_model import Agent
+from FrozenLake.DQN_model import Agent
 import numpy as np
 import cv2
 import imageio

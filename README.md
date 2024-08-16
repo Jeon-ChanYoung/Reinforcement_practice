@@ -4,6 +4,7 @@
  - MountainCar-v0 
  - simulation 
  - CartPole-v1 (using DQN) 
+ - 
 
 ### MountainCar-v0 (using Q-learning)  
 ![Mountain Car](gif/mountaincar.gif)  
